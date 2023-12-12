@@ -111,7 +111,7 @@ MODEL_CONFIG=(
   "assessment-results=assessment-results|Assessment Results|assessment|assessment-results"
   "poam=plan-of-action-and-milestones|Plan of Action and Milestones|assessment|poam"
   "mapping=mapping|Control Mapping|control|mapping"
-  "shared-responsibility=shared-responsibility|Shared Responsibility|responsibility|shared-responsibility"
+  "shared-responsibility=shared-responsibility|Shared Responsibility|control|shared-responsibility"
 )
 
 function configGet() { 
