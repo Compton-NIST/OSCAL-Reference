@@ -43,6 +43,10 @@ serve: modeldoc release-assets ## Spin up a static web server for local dev
 site: $(SITE_OUTPUT_DIR) ## Build the site
 
 $(SITE_OUTPUT_DIR): $(MODELDOC_REVISION_CONTENT_DIR) $(RELEASE_ASSET_REDIRECTS_DIR)
+	$(info    SITE_OUTPUT_DIR = $(SITE_OUTPUT_DIR))
+	$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
+	$(info    MODELDOC_REVISION_DATA_DIR = $(MODELDOC_REVISION_DATA_DIR))
+	$(info    RELEASE_ASSET_REDIRECTS_DIR = $(RELEASE_ASSET_REDIRECTS_DIR))
 	cd site; hugo --minify
 
 .PHONY: clean-site
