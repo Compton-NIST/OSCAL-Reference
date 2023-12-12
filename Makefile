@@ -35,24 +35,29 @@ MODELDOC_DATA_DIR:=site/data/models
 MODELDOC_REVISION_DATA_DIR:=$(patsubst %,$(MODELDOC_DATA_DIR)/%/,$(REVISIONS))
 SITE_OUTPUT_DIR:=site/public
 
-.PHONY: serve
-serve: modeldoc release-assets ## Spin up a static web server for local dev
-	cd site
-	find ./
-	hugo serve
-
-.PHONY: site
-site: $(SITE_OUTPUT_DIR) ## Build the site
+.PHONY: environment
+environment:
 	$(info    REVISIONS = $(REVISIONS))
+	$(info    MODELDOC_CONTENT_DIR = $(MODELDOC_CONTENT_DIR))
+	$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
 	$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
 	$(info    MODELDOC_REVISION_DATA_DIR = $(MODELDOC_REVISION_DATA_DIR))
 	$(info    SITE_OUTPUT_DIR = $(SITE_OUTPUT_DIR))
-
-$(SITE_OUTPUT_DIR): $(MODELDOC_REVISION_CONTENT_DIR) $(RELEASE_ASSET_REDIRECTS_DIR)
 	$(info    SITE_OUTPUT_DIR = $(SITE_OUTPUT_DIR))
 	$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
 	$(info    MODELDOC_REVISION_DATA_DIR = $(MODELDOC_REVISION_DATA_DIR))
 	$(info    RELEASE_ASSET_REDIRECTS_DIR = $(RELEASE_ASSET_REDIRECTS_DIR))
+	$(info    Files in site: $(shell find ./site))
+
+.PHONY: serve
+serve: modeldoc release-assets ## Spin up a static web server for local dev
+	cd site
+	hugo serve
+
+.PHONY: site
+site: $(SITE_OUTPUT_DIR) ## Build the site
+
+$(SITE_OUTPUT_DIR): $(MODELDOC_REVISION_CONTENT_DIR) $(RELEASE_ASSET_REDIRECTS_DIR)
 	cd site; hugo --minify
 
 .PHONY: clean-site
@@ -62,14 +67,11 @@ clean-site: ## Clean the site
 #
 # Model documentation
 #
-
 .PHONY: modeldoc
 modeldoc: $(MODELDOC_REVISION_CONTENT_DIR) ## Generate model documentation
 
 # TODO specify archetypes/ as a dependency
 $(MODELDOC_CONTENT_DIR)/%/:
-	$(info    MODELDOC_CONTENT_DIR = $(MODELDOC_CONTENT_DIR))
-	$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
 	./support/generate_modeldoc.sh $*
 
 .PHONY: clean-modeldoc
