@@ -134,10 +134,9 @@ jobs:
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
         # GHA runners have 2 CPUs
         run: |
-          make site REVISIONS='v1.1.1' PROTOTYPE_BRANCHES_PREFIX='prototype'
-
-      # ${{ github.event.inputs.revisions != '' && format('REVISIONS=''{0}''', github.event.inputs.revisions) || '' }} \
-      # ${{ github.event.inputs.revisions == '' && github.event.inputs.prefix && format('PROTOTYPE_BRANCHES_PREFIX=''{0}''', github.event.inputs.prefix) || '' }}
+          make site \
+            ${{ github.event.inputs.revisions != '' && format('REVISIONS=''{0}''', github.event.inputs.revisions) || '' }} \
+            ${{ github.event.inputs.revisions == '' && github.event.inputs.prefix && format('PROTOTYPE_BRANCHES_PREFIX=''{0}''', github.event.inputs.prefix) || '' }}
       #
       # Checks (and check plumbing)
       #
