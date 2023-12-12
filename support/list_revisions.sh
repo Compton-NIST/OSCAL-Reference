@@ -15,4 +15,4 @@ TAGGED_REVISIONS=$(echo "${TAGS}" | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$')
 # sort tags (which should be in semver-ish format)
 TAGGED_REVISIONS=$(echo "${TAGGED_REVISIONS}" | sort -t "." -k1,1n -k2,2n -k3,3n)
 
-echo "${TAGGED_REVISIONS}"
+echo "${TAGGED_REVISIONS}"  | tail -n 2
