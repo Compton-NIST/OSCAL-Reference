@@ -35,10 +35,6 @@ MODELDOC_DATA_DIR:=site/data/models
 MODELDOC_REVISION_DATA_DIR:=$(patsubst %,$(MODELDOC_DATA_DIR)/%/,$(REVISIONS))
 SITE_OUTPUT_DIR:=site/public
 
-$(info    REVISIONS = $(REVISIONS))
-$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
-$(info    MODELDOC_REVISION_DATA_DIR = $(MODELDOC_REVISION_DATA_DIR))
-
 .PHONY: serve
 serve: modeldoc release-assets ## Spin up a static web server for local dev
 	cd site
@@ -47,6 +43,10 @@ serve: modeldoc release-assets ## Spin up a static web server for local dev
 
 .PHONY: site
 site: $(SITE_OUTPUT_DIR) ## Build the site
+	$(info    REVISIONS = $(REVISIONS))
+	$(info    MODELDOC_REVISION_CONTENT_DIR = $(MODELDOC_REVISION_CONTENT_DIR))
+	$(info    MODELDOC_REVISION_DATA_DIR = $(MODELDOC_REVISION_DATA_DIR))
+	$(info    SITE_OUTPUT_DIR = $(SITE_OUTPUT_DIR))
 
 $(SITE_OUTPUT_DIR): $(MODELDOC_REVISION_CONTENT_DIR) $(RELEASE_ASSET_REDIRECTS_DIR)
 	$(info    SITE_OUTPUT_DIR = $(SITE_OUTPUT_DIR))
