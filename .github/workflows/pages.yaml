@@ -117,6 +117,16 @@ jobs:
           path: .lycheecache
           key: cache-lychee-${{ github.sha }}
           restore-keys: cache-lychee-
+
+      #
+      # Debug
+      #
+      - name: Debug
+        run: |
+            echo ${{ github.event.inputs.revisions != '' && format('REVISIONS=''{0}''', github.event.inputs.revisions) || '' }}
+            echo ${{ github.event.inputs.revisions == '' && github.event.inputs.prefix && format('PROTOTYPE_BRANCHES_PREFIX=''{0}''', github.event.inputs.prefix) || '' }}
+
+
       #
       # Build
       #
@@ -150,16 +160,16 @@ jobs:
       #
       # Deployment
       #
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
-        # Deploy if on main branch and EITHER the linkcheck succeeds or ignore_linkcheck has been flipped
-        #   crucially ignore periodic checks
-        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (steps.linkcheck.outcome == 'success' || github.event.inputs.ignore_linkcheck)
-        with:
-          personal_token: ${{ secrets.COMMIT_TOKEN }}
-          enable_jekyll: false
-          publish_dir: ./site/public
-          publish_branch: nist-pages
-          user_name: OSCAL GitHub Actions Bot
-          user_email: oscal@nist.gov
-          commit_message: Deploying website [ci deploy]
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@068dc23d9710f1ba62e86896f84735d869951305
+      #   # Deploy if on main branch and EITHER the linkcheck succeeds or ignore_linkcheck has been flipped
+      #   #   crucially ignore periodic checks
+      #   if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && (steps.linkcheck.outcome == 'success' || github.event.inputs.ignore_linkcheck)
+      #   with:
+      #     personal_token: ${{ secrets.COMMIT_TOKEN }}
+      #     enable_jekyll: false
+      #     publish_dir: ./site/public
+      #     publish_branch: nist-pages
+      #     user_name: OSCAL GitHub Actions Bot
+      #     user_email: oscal@nist.gov
+      #     commit_message: Deploying website [ci deploy]
